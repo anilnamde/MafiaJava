@@ -1,0 +1,52 @@
+
+=====================
+1. JUnit Overview
+=====================
+Its testing framework for Java
+Writing test with Junit is not just testing but an activity of writing code
+
+1. Junit Feature
+    1. Assertion
+    2. Test setup & Tear down
+    3. Test for exception
+    4. Test suites
+    5. Parameterized test
+    6. Assumptions: to igore test for perticular platform
+    7. Rules : to extend function of Junit
+    8. Theory : special test run under different context
+    9. Interation with build system
+
+
+2. Where is JUnit Components
+
+Code to test: code to test
+Test Code(in JUnit): Class to setup. tear down data
+Junit Runner: To run test and return results
+
+3. Unit testing fundamentals:
+    1. Take smallest unit of code and test it i.e. class is "unit testing"
+    2. If you test more than one class its like "Integration testing". You can also do it with JUnit
+
+RECOMMENDED:
+Course: Outside in Test-Driven Developement
+Course: Test First Developement Part I & II
+
+4. History
+    Kent Beck/Albert Gamma
+    1994: Small Talk SUnit
+    1997: JUnit flight
+    2000: JUnit.org
+    2002: Built in Eclips
+
+5. Installation:
+    1. Its already in the Eclips
+    2. Download junit.jar, hamcrest-core.jar
+
+    1. For testing general setup is
+        - One project where actual code is
+        - Other project which has all the testing code
+
+
+
+
+

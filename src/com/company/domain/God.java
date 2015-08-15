@@ -1,14 +1,8 @@
 package com.company.domain;
 
-public class God extends Villager{
-    private Role role = null;
-
+public class God extends Person{
     public God(String firstName, String lastName) {
         super(firstName, lastName);
-        role = Role.GOD;
-    }
-
-    public Role getRole(){
-        return role;
+        setRole(Role.GOD);
     }
 }

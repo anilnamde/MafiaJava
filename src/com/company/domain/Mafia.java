@@ -1,16 +1,10 @@
 package com.company.domain;
 
-public class Mafia extends Villager {
-    private Role role = null;
+public class Mafia extends Person {
 
     public Mafia(String firstName, String lastName) {
         super(firstName, lastName);
-        role = Role.MAFIA;
-    }
-
-    @Override
-    public Role getRole() {
-        return role;
+        super.setRole(Role.MAFIA);
     }
 }
 

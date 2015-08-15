@@ -1,4 +1,4 @@
-package com.company.test;
+package test;
 
 import com.company.domain.Mafia;
 import com.company.domain.Role;
@@ -11,9 +11,9 @@ public class MafiaTest {
 
     public void test_Mafia(){
         Mafia mafia = new Mafia("firstName", "lastName");
+
         assertThat(mafia.getRole(), is(Role.MAFIA));
         assertThat(mafia.getFirstName(), is("firstName"));
         assertThat(mafia.getLastName(), is("lastName"));
-
     }
 }

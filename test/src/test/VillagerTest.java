@@ -1,10 +1,9 @@
-package com.company.test;
+package test;
 
 import com.company.domain.Role;
 import com.company.domain.Villager;
 import org.hamcrest.CoreMatchers;
 import org.junit.Test;
-import sun.jvm.hotspot.utilities.Assert;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
