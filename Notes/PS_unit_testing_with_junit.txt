@@ -46,6 +46,366 @@ Course: Test First Developement Part I & II
         - One project where actual code is
         - Other project which has all the testing code
 
+=====================
+JUnit Basics
+=====================
+1. Need to create test method its has to be
+    1. public void
+    2. @Test anotation
+    3. Old JUnit method needed to start with test in JUnit4 its not needed
+
+    have good naming convention for test
+    group related tests in separate class
+
+2. JUnit annotations
+    1. @Test
+    2. @Before/@After
+    3. @BeforeClass/@AfterClass
+    4. @Ignore
+    5. Test(expected = Exception.class): To test exceptions
+    6. Test(timeout = 100): Period in which it should execute or it would time out
+
+3. Example one
+
+    public void testMethod(){
+        ClassTest test = new ClassTest();
+        assertEquals("Message to display", valueToCheck, test.ActualValue());
+    }
+
+4. @Before and @After
+   1. helpful for removing duplication
+   2. It runs and tear down before and after each test case
+   3. Not good to rely on the order of testCases as its possible as order of testcase modifying common object which is not in a clean state for testing. Adding/change of sequence test case might fail the tests.
+   4. So good to have clean slate before running each testCase. It might just cause issues.
+
+5. @BeforeClass & @AfterClass
+    Execute once for the class before and after all the test cases are running.
+    These methods declares should be static otherwise it will case error
+
+    ex: Note it has to be static
+    @BeforeClass
+    public static void beforeClassSetup(){
+        System.out.println("executes just before the class");
+    }
+
+6. @Ignore : Add it to method that you want to simply ignore
+
+    @Ignore
+    @Test
+    public void hello(){
+
+    }
+
+7. @Test(expected = ExceptiontType.class)
+    Test pass only when the code under test generates this exception.
+
+    @Test(expected = NullReferenceException.class)
+    public void hello() throws NullReferenceException{
+        Hello x = null;
+        x.method();
+    }
+
+8. @Test(timeout=n ms)
+    Fail test if not executed in "n miliseconds"
+
+    @Test(timeout = 100)
+    public void hello(){
+        white(true){}
+    }
+
+9. Different Assertions
+    1. assertArrayEquals
+    2. assertEquals
+    3. assertTrue
+    4. assertFalse
+    5. assertNull
+    6. assertNotNull
+    7. assertSame:
+    8. assertNotSame:
+    9. fail: just to fail the test
+
+
+======================
+Advanced jUnit
+======================
+1. Test Suit:
+    To able to run multiple test classes together
+    This helps to group related tests together
+
+    TestSuite -> TestClasses... n
+
+    ex:
+    @RunWith(Suite.class)
+    @Suite.SuiteClasses({
+        HelloUnitTest.class,
+        TrackingServiceTests.class
+    })
+    public class nameSuite(){
+
+    }
+
+2. Category:
+    Specialized test suite same as suite
+    We can add category to the TestClass which decides when to run it or not
+    Its declared as a interface
+
+    ex:
+    step 1: create test category
+        public interface GoodCategory(){
+        }
+    step 2: assign existing test case or test class as category
+        @Category(GoodCategory.class)
+        public void testHello(){
+
+        }
+
+        @Category(GoodCategory.class)
+        public class HelloTestClass(){
+
+        }
+
+    step 3: Ceate suite to work against the new category
+
+    @RunWith(Categories.class)
+    @IncludeCategory(GoodCategory.class)
+    @Suite.SuiteClasses({
+        HelloUnitTest.class,
+        TrackingServiceTests.class
+    })
+    public class GoodTestSuite{
+
+    }
+
+    Whats happening here ?
+        - We have Suite to execute test under HelloUnitTest, TrackingServiceTests classes
+        - And then they get filtered based on the Category applied on themm
+
+
+    step 4: its also possible to exclude Category. Lets extend above example with BadCategory
+
+    public interface BadCategory(){
+
+    }
+
+    @Category({GoodCategory.class, BadCategory.class})
+    public void testHello(){
+
+    }
+
+    @RunWith(Categories.class)
+    @IncludeCategory(GoodCategory.class)
+    @ExcludeCategory(BadCategory.class)
+    @Suite.SuiteClasses({
+        HelloUnitTest.class,
+        TrackingServiceTests.class
+    })
+    public class GoodTestSuite{
+
+    }
+
+3. Parameterasized Test
+    Repeatative test varies for only input and the output
+    Parameterasied test solve this so no need to writed redandant tests
+
+    ex:
+    @RunWith(Parameterized.class)
+    public class ParameterizedTest(){
+        @Parameters
+        public static List<Object[]> data(){
+            return Array.asList(new Object[][]{
+                {1,3},
+                {2,4},
+                {inpur, expected}
+            });
+        }
+
+        private int input;
+        private int expected;
+
+        public ParameterizedTest(int input, int expected){
+            this.input = input;
+            this.expected = expected;
+        }
+
+        @Test
+        public void test(){
+            ..
+            obj.something(input) ...
+
+            assertEquals(expected, obj.method());
+        }
+
+    }
+
+4. Hamcreast: powerfull readable assertions (name spacce org.hamcrest.CoreMatchers.*, junit matchers org.junit.matchers.jUnitMatchers.*)
+
+    ex assertThat([value], [Matcher])
+
+    Some of the matchers
+    1. Is : single conditionn check
+    2. HasItem
+    3. ContainsString
+    4. IsNull
+    5. AllOf : do multiple checks
+
+
+5. Advanced Exception Test
+    - code to test
+        public void something(){
+            throw  new Exception("Message in the excepiton to tests");
+        }
+
+    - test
+    public class TestExceptions{
+        @Rule
+        public ExpectedException thrown =   ExpectedException.none()
+
+
+        @Test
+        public void testException(){
+            thrown.expect(Exception.class);
+            thrown.expectedMessage("Message in the excepiton to tests");
+            obj.setSomethingToGetException();
+        }
+    }
+
+6. Rules:
+    Existing rules are there
+    Rules can be extended to create your own Rules to extend JUnit.
+    Ways to hook in functinality to run before and after test
+
+    @Rule: Apply rule at the test level
+    @ClassRule : to apply reule at class level
+
+
+    Types:
+    1. TemporaryFolder
+    2. ExternalResoure
+    3. ErrorCollector
+    4. Verifier
+    5. TestWatcher
+    6. TestName
+    7. Timeout : to specify timeout for entire set of the tests
+    8. ExpectedException
+    9. RuleChain
+
+
+    ex:
+    1. Timeout Rule : to add timeout for all the tests in class
+    @Rule
+    public Timeout timeout= new Timeout(20);
+
+7. Theories:
+    They are like parameterized test
+    Therey test that holds true under all assumptions
+    We case create therory by @Theory annotation instead of @Test
+    Diffrence is that Theory will have same output for set of inputs
+
+
+    @DataPoint/@DataPoints: anotation for static data
+    @Theory: anotation to create theory
+
+    ex: Example to add value if you add positive value output is also going to be the positive value
+
+    @RunWith(Theories.class)
+    public void TestTheoryClass{
+
+        @DataPoint
+        public static int[] data(){
+            return new int[]{
+                1,2,3,4,5,6,7,-5
+            };
+        }
+
+        @Theory
+        public void positiveValue(int val){
+            TestClass test = new TestClass();
+            test.addValue(val);
+
+            Assume.assumeTrue(val > 0);
+
+            assertTrue(test.value > 0)
+        }
+
+    }
+
+===========================================
+Integration in Build System (Ant and Maven)
+===========================================
+1. Way to running tests:
+    1. Run test from editor
+    2. Use Runner class to run tests from Java Code. So create Java app to run tests. Stand alone application to run the tests
+        a. Create console app to run tests
+        b.
+
+            JunitCore core = new JUnitCore();
+            core.addListener(new TextListener(System.out)); // To ensure output is printed on console
+            core.run(ClassToTest.class);
+
+        c. You can compile it to applicaton as Jar or exe to run the application to run tests from console
+
+    3. Invoke JUnit Runner from command line and provide name of classes to test.
+        a. To run tests from command need Jar to be download of JUnit
+        b. Next export project as .jar
+        c. Type command
+            java -cp /usr/lib/junit/*;/user/codetotesejarform/code.jar org.junit.runner.junitcore com.testdomain.test.ClassTest
+        d. You can add this to script to simplify it
+
+2. Ant is build system
+    1. Integrating jUnit into Ant
+    2. Generating Ant script using editor, right click on the project and export select AntBuildFile and select projects and finish it creates
+        xml for all the projects
+    3. Running test with Ant: Right click on build.xml select run as Ant Build.
+        You can also do configure external tools you can selct Target to run in here select tests as well as build
+    4. You can also select report in Task and it shows test report
+
+    To run Ant from commandline. Download Ant
+    1. to it ant buildFilePath.xml
+    2. To run specific target   "ant build.xml junitreport" // junitreport is has to be new target in ant build.xml file
+
+3. Maven: Build and dependancy management tool (Good to go through course if needed more detials)
+    To run test with Maven (Roll changes without Ant support back)
+    1. Right click on Project and find Convert to Maven project
+    2. We can add dependancy of projects in Maven. Right click on "pom.xml" then add dependancy
+
+4. Code coverage tools:
+    1. % of code that is executed on tests
+    2. EclEmma/Solar/Cobertura
+
+
+
+====================================
+Beyond JUNIT
+====================================
+1. Continuous Testing tools: help you change code test and get quick feedback
+    Eclips plugin InfiniTest: Ita automatically runs test each time changes are saved
+
+2. Dependancy:
+    Example unit test code is isolated having no dependancy
+    Two basic concepts to deal with dependacy is Stub and Mocks
+
+    1. Stub:
+        pretend to be Subject Under Test
+        try to remove any dependancy code is trying to use
+        How to create Stub.
+            - create interface defining interface
+            - and Stub class that implement interface and return dummy data and store little data for state
+        for DTO no need to create stub we can use it as is
+
+    2. Mocks
+        Stub don't test anything
+        Stub just allow subject under test to call methods on it and return dummy data
+        Mocks help check if subject under test is doning the intended calls only
+        Mocks acts as dependancy and also remembers what calls are made to it
+        Mock can also return specific data under certain condition
+
+3. Integration Testing
+    We want to ensure to use dependancy by Subject under test
+    This is where BeforeClass and AfterClass anotations come in handy
+
+4. Selenium
+    JUnit test to drive Selenium
+
 
 
 
