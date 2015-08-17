@@ -1,4 +1,4 @@
-package com.company.domain;
+package com.company.domain.dto;
 
 public class God extends Person{
     public God(String firstName, String lastName) {

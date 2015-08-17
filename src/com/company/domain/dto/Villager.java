@@ -1,4 +1,4 @@
-package com.company.domain;
+package com.company.domain.dto;
 
 public class Villager extends Person{
     public Villager(String firstName, String lastName) {

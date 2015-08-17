@@ -1,7 +1,7 @@
 package test;
 
-import com.company.domain.Role;
-import com.company.domain.Villager;
+import com.company.domain.dto.Role;
+import com.company.domain.dto.Villager;
 import org.hamcrest.CoreMatchers;
 import org.junit.Test;
 

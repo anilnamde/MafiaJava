@@ -1,13 +1,10 @@
 package test;
 
-import com.company.domain.Game;
-import com.company.domain.Person;
-import com.company.domain.Villager;
+import com.company.domain.dto.Game;
 import org.junit.Before;
 import org.junit.Test;
 
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.*;
 
 public class GameTest {
     private Game game= null;

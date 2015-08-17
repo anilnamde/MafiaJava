@@ -1,7 +1,7 @@
 package test;
 
-import com.company.domain.Mafia;
-import com.company.domain.Role;
+import com.company.domain.dto.Mafia;
+import com.company.domain.dto.Role;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;

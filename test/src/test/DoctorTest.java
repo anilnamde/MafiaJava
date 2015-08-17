@@ -1,8 +1,7 @@
 package test;
 
-import com.company.domain.Doctor;
-import com.company.domain.Role;
-import com.company.domain.Villager;
+import com.company.domain.dto.Doctor;
+import com.company.domain.dto.Role;
 import org.junit.Test;
 
 import static org.hamcrest.Matchers.is;

@@ -1,4 +1,4 @@
-package com.company.domain;
+package com.company.domain.dto;
 
 public class Mafia extends Person {
 

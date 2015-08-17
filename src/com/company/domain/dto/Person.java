@@ -1,4 +1,4 @@
-package com.company.domain;
+package com.company.domain.dto;
 
 public abstract class Person {
     private String firstName;
